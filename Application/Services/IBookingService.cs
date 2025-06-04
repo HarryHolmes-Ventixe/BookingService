@@ -7,5 +7,6 @@ namespace Application.Services
     {
         Task<BookingResult> CreateBookingAsync(CreateBookingRequest request);
         Task<BookingResult<Booking?>> GetBookingAsync(string id);
+        Task<BookingResult<List<Booking>>> GetBookingsByEmailAsync(string email);
     }
 }

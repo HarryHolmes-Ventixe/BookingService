@@ -105,4 +105,39 @@ public class BookingService(IBookingRepository bookingRepository) : IBookingServ
             Error = "Booking not found."
         };
     }
+
+    public async Task<BookingResult<List<Booking>>> GetBookingsByEmailAsync(string email)
+    {
+        var result = await _bookingRepository.GetAllAsync();
+        var bookings = new List<Booking>();
+
+        if (result.Success && result.Result != null)
+        {
+            foreach (var entity in result.Result.Where(x =>
+            x.BookingOwner != null &&
+            !string.IsNullOrWhiteSpace(x.BookingOwner.Email) &&
+            x.BookingOwner.Email.Trim().Equals(email.Trim(), StringComparison.OrdinalIgnoreCase)))
+            {
+                bookings.Add(new Booking
+                {
+                    Id = entity.Id,
+                    EventId = entity.EventId,
+                    TicketQuantity = entity.TicketQuantity,
+                    FirstName = entity.BookingOwner?.FirstName ?? string.Empty,
+                    LastName = entity.BookingOwner?.LastName ?? string.Empty,
+                    Email = entity.BookingOwner?.Email ?? string.Empty,
+                    StreetName = entity.BookingOwner?.Address?.StreetName ?? string.Empty,
+                    PostalCode = entity.BookingOwner?.Address?.PostalCode ?? string.Empty,
+                    City = entity.BookingOwner?.Address?.City ?? string.Empty,
+                    BookingDate = entity.BookingDate
+                });
+            }
+        }
+
+        return new BookingResult<List<Booking>>
+        {
+            Success = true,
+            Result = bookings
+        };
+    }
 }
