@@ -89,7 +89,8 @@ public class BookingService(IBookingRepository bookingRepository) : IBookingServ
                 Email = result.Result.BookingOwner?.Email!,
                 StreetName = result.Result.BookingOwner?.Address?.StreetName!,
                 PostalCode = result.Result.BookingOwner?.Address?.PostalCode!,
-                City = result.Result.BookingOwner?.Address?.City!               
+                City = result.Result.BookingOwner?.Address?.City!,
+                BookingDate = result.Result.BookingDate
             };
 
             return new BookingResult<Booking?>

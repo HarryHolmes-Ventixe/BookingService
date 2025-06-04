@@ -2,13 +2,14 @@
 
 public class Booking
 {
-    public string Id { get; set; } = default!;
-    public string EventId { get; set; } = default!;
-    public string FirstName { get; set; } = default!;
-    public string LastName { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string StreetName { get; set; } = default!;
-    public string PostalCode { get; set; } = default!;
-    public string City { get; set; } = default!;
+    public string Id { get; set; } = null!;
+    public string EventId { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string StreetName { get; set; } = null!;
+    public string PostalCode { get; set; } = null!;
+    public string City { get; set; } = null!;
+    public DateTime BookingDate { get; set; }
     public int TicketQuantity { get; set; }
 }
