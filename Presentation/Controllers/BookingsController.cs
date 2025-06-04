@@ -20,7 +20,20 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
 
         var result = await _bookingService.CreateBookingAsync(request);
         return result.Success
-            ? Ok()
+            ? Ok(new { result.Booking!.Id })
             : StatusCode(StatusCodes.Status500InternalServerError, "Unable to create booking.");
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBooking(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            return BadRequest("Booking ID cannot be null or empty.");
+        }
+        var result = await _bookingService.GetBookingAsync(id);
+        return result.Success && result.Result != null
+            ? Ok(result.Result)
+            : NotFound("Booking not found.");
     }
 }

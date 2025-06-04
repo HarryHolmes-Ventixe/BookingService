@@ -13,7 +13,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     {
         _context = context;
         _table = context.Set<TEntity>();
-        //_table is _dbSet
     }
 
     #region CRUD Operations
