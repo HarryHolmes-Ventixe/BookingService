@@ -13,8 +13,9 @@ public class BookingRepository(DataContext context) : BaseRepository<BookingEnti
         try
         {
             var entities = await _table
+            .Include(x => x.BookingOwner)
+            .ToListAsync();
 
-                .ToListAsync();
             return new RepositoryResult<IEnumerable<BookingEntity>>
             {
                 Success = true,

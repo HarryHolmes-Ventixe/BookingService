@@ -37,9 +37,6 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
             : NotFound(new { error = "Booking not found." });
     }
 
-
-    // This endpoint retrieves all bookings associated with a specific email address.
-    // It is currently returning an empty list, even if bookings are attached to the email provided.
     [HttpGet]
     public async Task<IActionResult> GetBookingsByEmail([FromQuery] string email)
     {
