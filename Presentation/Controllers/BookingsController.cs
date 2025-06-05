@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -37,9 +38,17 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
             : NotFound(new { error = "Booking not found." });
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetBookingsByEmail([FromQuery] string email)
+    // I was advised to add in the [Authorize] attribute to the endpoint as this is a common practice in real-world situations.
+
+    [Authorize]
+    [HttpGet("my-bookings")]
+    public async Task<IActionResult> GetMyBookings()
     {
+        var email = User.FindFirst("email")?.Value;
+
+        if (string.IsNullOrEmpty(email))
+            return Unauthorized("No email found in token.");
+
         var result = await _bookingService.GetBookingsByEmailAsync(email);
         return Ok(result.Result);
     }
